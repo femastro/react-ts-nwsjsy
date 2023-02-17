@@ -1,8 +1,12 @@
 import * as React from 'react';
+import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
+
 import './Styles/style.css';
 import 'bootswatch/dist/slate/bootstrap.min.css';
 
 import Header from './Header';
+import Home from './pages/Home';
+import Contact from './pages/Contact';
 
 export default function App() {
   return (
@@ -18,6 +22,12 @@ export default function App() {
           </div>
         </div>
       </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
