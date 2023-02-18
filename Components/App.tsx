@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
 import './Styles/style.css';
 import 'bootswatch/dist/slate/bootstrap.min.css';
 
+/// App Initial
 import Header from './Header';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
