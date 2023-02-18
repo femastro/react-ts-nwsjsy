@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
 
+/// Styles
 import './Styles/style.css';
 import 'bootswatch/dist/slate/bootstrap.min.css';
 
