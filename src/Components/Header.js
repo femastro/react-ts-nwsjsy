@@ -41,6 +41,14 @@ export default function Header() {
                     </div>
                 </div>
             </nav>
+            <div className="container">
+                <div className="row py-5 text-danger text-center">
+                    <div className="col-md-6 mx-auto">
+                        <h3>Gestión de Stock</h3>
+                    </div>
+                </div>
+                <hr />
+            </div>
         </div>
     );
 }
