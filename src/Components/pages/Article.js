@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import { useState, useEffect } from "react";
 
 import { Link, useParams } from "react-router-dom";
 
 export default function Article() {
     const { id } = useParams();
-
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -18,6 +17,20 @@ export default function Article() {
             .catch((error) => console.error("Error =>", error));
     }, []);
 
+    const [marca, setMarca] = useState("");
+    const [modelo, setModelo] = useState("");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = {
+            marca: marca,
+            modelo: modelo,
+        };
+
+        console.table(formData);
+        // Aquí puedes enviar los datos del formulario a un servidor o realizar otras acciones con ellos.
+    };
+
     return (
         <div className="container">
             <div className="row">
@@ -26,61 +39,74 @@ export default function Article() {
                         <h1>Article Details</h1>
                     </div>
                     <div className="card-body">
-                        {data.map((item) => (
-                            <div key={item.id}>
-                                <div className="mb-5">
-                                    <label className="form-label">Marca</label>
-                                    <input
-                                        name="marca"
-                                        className="form-control"
-                                        defaultValue={item.marca}
-                                    />
+                        <form onSubmit={handleSubmit} method="POST">
+                            {data.map((item) => (
+                                <div key={item.id}>
+                                    <div className="mb-5">
+                                        <label className="form-label">
+                                            Marca
+                                        </label>
+                                        <input
+                                            name={marca}
+                                            className="form-control"
+                                            defaultValue={item.marca}
+                                            onChange={(e) =>
+                                                setMarca(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="mb-5">
+                                        <label className="form-label">
+                                            Modelo
+                                        </label>
+                                        <input
+                                            name={modelo}
+                                            className="form-control"
+                                            defaultValue={item.modelo}
+                                            onChange={(e) =>
+                                                setModelo(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="mb-5">
+                                        <label className="form-label">
+                                            Medida
+                                        </label>
+                                        <input
+                                            name="medida"
+                                            className="form-control"
+                                            defaultValue={item.medida}
+                                        />
+                                    </div>
+                                    <div className="mb-5">
+                                        <label className="form-label">
+                                            Proveedor
+                                        </label>
+                                        <input
+                                            name="proveedor"
+                                            className="form-control"
+                                            defaultValue={item.cod_Proveedor}
+                                        />
+                                    </div>
+                                    <div className="mb-5">
+                                        <label className="form-label">
+                                            Cantidad
+                                        </label>
+                                        <input
+                                            name="cantidad"
+                                            className="form-control"
+                                            defaultValue={item.cantidad}
+                                        />
+                                    </div>
+                                    <button
+                                        className="btn btn-info btn-block w-100"
+                                        type="submit"
+                                    >
+                                        Save
+                                    </button>
                                 </div>
-                                <div className="mb-5">
-                                    <label className="form-label">Modelo</label>
-                                    <input
-                                        name="modelo"
-                                        className="form-control"
-                                        defaultValue={item.modelo}
-                                    />
-                                </div>
-                                <div className="mb-5">
-                                    <label className="form-label">Medida</label>
-                                    <input
-                                        name="medida"
-                                        className="form-control"
-                                        defaultValue={item.medida}
-                                    />
-                                </div>
-                                <div className="mb-5">
-                                    <label className="form-label">
-                                        Proveedor
-                                    </label>
-                                    <input
-                                        name="proveedor"
-                                        className="form-control"
-                                        defaultValue={item.cod_Proveedor}
-                                    />
-                                </div>
-                                <div className="mb-5">
-                                    <label className="form-label">
-                                        Cantidad
-                                    </label>
-                                    <input
-                                        name="cantidad"
-                                        className="form-control"
-                                        defaultValue={item.cantidad}
-                                    />
-                                </div>
-                                <a
-                                    className="btn btn-info btn-block w-100"
-                                    href="#"
-                                    role="button"
-                                >
-                                    Save
-                                </a>
-                            </div>
-                        ))}
+                            ))}
+                        </form>
                     </div>
                 </div>
             </div>
