@@ -4,41 +4,26 @@ import { Link, useParams } from "react-router-dom";
 
 export default function Article() {
     const { id } = useParams();
-    const [codigo, setCodigo] = useState();
-    const [marca, setMarca] = useState();
-    const [modelo, setModelo] = useState();
-    const [medida, setMedida] = useState();
-    const [proveedor, setProveedor] = useState();
-    const [cantidad, setCantidad] = useState();
+    const [data, setData] = useState({});
 
     useEffect(() => {
         fetch(`http://www.mastrosoft.com.ar/api/public/neumaticos/${id}`)
             .then((response) => response.json())
             .then((data) => {
-                setCodigo(data.cod_Articulo);
-                setMarca(data.marca);
-                setModelo(data.modelo);
-                setMedida(data.medida);
-                setProveedor(data.cod_Proveedor);
-                setCantidad(data.cantidad);
+                setData(data);
             })
-
             .catch((error) => console.error("Error =>", error));
     }, []);
 
+    const handleChange = (event) => {
+        setData({
+            ...data,
+            [event.target.name]: event.target.value,
+        });
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = {
-            cod_Articulo: codigo,
-            marca: marca,
-            modelo: modelo,
-            medida: medida,
-            cod_Proveedor: proveedor,
-            cantidad: parseInt(cantidad),
-            image: "",
-        };
-
-        console.log(formData);
 
         try {
             const config = {
@@ -47,7 +32,7 @@ export default function Article() {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(data),
             };
             await fetch(
                 `http://www.mastrosoft.com.ar/api/public/neumaticos/update/${id}`,
@@ -57,13 +42,17 @@ export default function Article() {
                     const resultado = respuesta.json();
                     return resultado;
                 })
-                .then((resultado) => console.log(resultado))
+                .then((resultado) => {
+                    const texto = document.getElementById("editado");
+                    texto.innerHTML = `<div class="alert alert-dismissible alert-success">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    <p>${resultado}</p>
+                  </div>`;
+                })
                 .catch((error) => console.error("Error =>", error));
         } catch (error) {
             console.log(error);
         }
-
-        // Aquí puedes enviar los datos del formulario a un servidor o realizar otras acciones con ellos.
     };
 
     return (
@@ -79,45 +68,41 @@ export default function Article() {
                                 <div className="mb-5">
                                     <label className="form-label">Codigo</label>
                                     <input
-                                        name={codigo}
+                                        type="text"
+                                        name="cod_Articulo"
                                         className="form-control"
-                                        defaultValue={codigo}
-                                        onChange={(e) =>
-                                            setCodigo(e.target.value)
-                                        }
+                                        defaultValue={data.cod_Articulo}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className="mb-5">
                                     <label className="form-label">Marca</label>
                                     <input
-                                        name={marca}
+                                        type="text"
+                                        name="marca"
                                         className="form-control"
-                                        defaultValue={marca}
-                                        onChange={(e) =>
-                                            setMarca(e.target.value)
-                                        }
+                                        defaultValue={data.marca}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className="mb-5">
                                     <label className="form-label">Modelo</label>
                                     <input
-                                        name={modelo}
+                                        type="text"
+                                        name="modelo"
                                         className="form-control"
-                                        defaultValue={modelo}
-                                        onChange={(e) =>
-                                            setModelo(e.target.value)
-                                        }
+                                        defaultValue={data.modelo}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className="mb-5">
                                     <label className="form-label">Medida</label>
                                     <input
-                                        name={medida}
+                                        type="text"
+                                        name="medida"
                                         className="form-control"
-                                        defaultValue={medida}
-                                        onChange={(e) =>
-                                            setMedida(e.target.value)
-                                        }
+                                        defaultValue={data.medida}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className="mb-5">
@@ -125,12 +110,11 @@ export default function Article() {
                                         Proveedor
                                     </label>
                                     <input
-                                        name={proveedor}
+                                        type="text"
+                                        name="cod_Proveedor"
                                         className="form-control"
-                                        defaultValue={proveedor}
-                                        onChange={(e) =>
-                                            setProveedor(e.target.value)
-                                        }
+                                        defaultValue={data.cod_Proveedor}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className="mb-5">
@@ -138,13 +122,15 @@ export default function Article() {
                                         Cantidad
                                     </label>
                                     <input
-                                        name={cantidad}
+                                        type="number"
+                                        name="cantidad"
                                         className="form-control"
-                                        defaultValue={cantidad}
-                                        onChange={(e) =>
-                                            setCantidad(e.target.value)
-                                        }
+                                        defaultValue={data.cantidad}
+                                        onChange={handleChange}
                                     />
+                                </div>
+                                <div className="my-2">
+                                    <span id="editado"></span>
                                 </div>
                                 <button
                                     className="btn btn-info btn-block w-100"
