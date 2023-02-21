@@ -26,6 +26,7 @@ export default function Home() {
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
+                                    <th scope="col">CODIGO</th>
                                     <th scope="col">MARCA</th>
                                     <th scope="col">MODELO</th>
                                     <th scope="col">MEDIDA</th>
@@ -44,6 +45,7 @@ export default function Home() {
                                 {data.map((item) => (
                                     <tr key={item.id}>
                                         <td scope="row">{item.id}</td>
+                                        <td>{item.cod_Articulo}</td>
                                         <td>{item.marca}</td>
                                         <td>{item.modelo}</td>
                                         <td>{item.medida}</td>
