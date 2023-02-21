@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 export default function Article() {
+    const API_URL = "http://www.mastrosoft.com.ar/api/public/neumaticos/";
+
     const { id } = useParams();
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetch(`http://www.mastrosoft.com.ar/api/public/neumaticos/${id}`)
+        fetch(API_URL + id)
             .then((response) => response.json())
             .then((data) => {
                 setData(data);
@@ -24,20 +26,16 @@ export default function Article() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        console.log(JSON.stringify(data));
         try {
             const config = {
                 method: "PUT",
                 headres: {
-                    Accept: "application/json",
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
             };
-            await fetch(
-                `http://www.mastrosoft.com.ar/api/public/neumaticos/update/${id}`,
-                config
-            )
+            await fetch(API_URL + `update/${id}`, config)
                 .then((respuesta) => {
                     const resultado = respuesta.json();
                     return resultado;
@@ -127,6 +125,7 @@ export default function Article() {
                                         className="form-control"
                                         defaultValue={data.cantidad}
                                         onChange={handleChange}
+                                        min="0"
                                     />
                                 </div>
                                 <div className="my-2">

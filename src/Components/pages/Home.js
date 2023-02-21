@@ -37,7 +37,12 @@ export default function Home() {
                                         className="text-center"
                                         scope="col"
                                     >
-                                        ACCIÓN
+                                        <Link
+                                            to={`/newArticle`}
+                                            className="btn btn-success btn-sm w-100 text-center"
+                                        >
+                                            New
+                                        </Link>
                                     </th>
                                 </tr>
                             </thead>
@@ -50,19 +55,21 @@ export default function Home() {
                                         <td>{item.modelo}</td>
                                         <td>{item.medida}</td>
                                         <td>{item.cod_Proveedor}</td>
-                                        <td>{item.cantidad}</td>
-                                        <td>
+                                        <td className="text-center">
+                                            {item.cantidad}
+                                        </td>
+                                        <td className="text-center">
                                             <Link
                                                 to={`article/${item.id}`}
-                                                className="btn btn-info btn-sm text-center"
+                                                className="btn btn-info btn-sm"
                                             >
                                                 Edit
                                             </Link>
                                         </td>
-                                        <td>
+                                        <td className="text-center">
                                             <Link
                                                 to={`delete/${item.id}`}
-                                                className="btn btn-danger btn-sm text-center"
+                                                className="btn btn-danger btn-sm"
                                             >
                                                 Delete
                                             </Link>
