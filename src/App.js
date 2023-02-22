@@ -10,6 +10,7 @@ import Contact from "./Components/pages/Contact";
 import Article from "./Components/pages/Article";
 
 export default function App() {
+    const notify = () => toast("Wow so easy!");
     return (
         <div>
             <Header />

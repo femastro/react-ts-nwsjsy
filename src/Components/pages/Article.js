@@ -2,19 +2,22 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
-export default function Article() {
-    const API_URL = "http://www.mastrosoft.com.ar/api/public/neumaticos/";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+const API_URL = "https://www.mastrosoft.com.ar/api/public/neumaticos";
+
+export default function Article() {
     const { id } = useParams();
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetch(API_URL + id)
+        const apiUrl = `${API_URL}/${id}`;
+        fetch(apiUrl)
             .then((response) => response.json())
             .then((data) => {
                 setData(data);
-            })
-            .catch((error) => console.error("Error =>", error));
+            });
     }, []);
 
     const handleChange = (event) => {
@@ -26,28 +29,21 @@ export default function Article() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(JSON.stringify(data));
+
+        const Options = {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(data),
+        };
+
         try {
-            const config = {
-                method: "PUT",
-                headres: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            };
-            await fetch(API_URL + `update/${id}`, config)
-                .then((respuesta) => {
-                    const resultado = respuesta.json();
-                    return resultado;
-                })
-                .then((resultado) => {
-                    const texto = document.getElementById("editado");
-                    texto.innerHTML = `<div class="alert alert-dismissible alert-success">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <p>${resultado}</p>
-                  </div>`;
-                })
-                .catch((error) => console.error("Error =>", error));
+            const apiUrl = `${API_URL}/update/${id}`;
+            const result = await fetch(apiUrl, Options).then((d) => d.json());
+
+            const notify = () => toast(result);
+            notify();
         } catch (error) {
             console.log(error);
         }
@@ -55,6 +51,7 @@ export default function Article() {
 
     return (
         <div className="container">
+            <ToastContainer />
             <div className="row">
                 <div className="card col-md-8 mx-auto">
                     <div className="card-header text-center mt-3">
@@ -127,9 +124,6 @@ export default function Article() {
                                         onChange={handleChange}
                                         min="0"
                                     />
-                                </div>
-                                <div className="my-2">
-                                    <span id="editado"></span>
                                 </div>
                                 <button
                                     className="btn btn-info btn-block w-100"
