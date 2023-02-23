@@ -8,6 +8,8 @@ import Header from "./Components/Header";
 import Home from "./Components/pages/Home";
 import Contact from "./Components/pages/Contact";
 import Article from "./Components/pages/Article";
+import DeleteById from "./Components/pages/Delete";
+import NewArticle from "./Components/pages/New";
 
 export default function App() {
     const notify = () => toast("Wow so easy!");
@@ -19,6 +21,8 @@ export default function App() {
                     <Route exact path="/" element={<Home />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route exact path="/article/:id" element={<Article />} />
+                    <Route exact path="/delete/:id" element={<DeleteById />} />
+                    <Route exact path="/new" element={<NewArticle />} />
                 </Routes>
             </BrowserRouter>
         </div>

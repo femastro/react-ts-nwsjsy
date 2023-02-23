@@ -1,31 +1,22 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = "https://www.mastrosoft.com.ar/api/public/neumaticos";
 
-export default function Article() {
-    const { id } = useParams();
-    const [data, setData] = useState({});
-
+export default function NewArticle() {
     useEffect(() => {
-        const apiUrl = `${API_URL}/${id}`;
-        fetch(apiUrl)
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data);
-            });
-    }, []);
-
-    const handleChange = (event) => {
         setData({
-            ...data,
-            [event.target.name]: event.target.value,
+            marca: "",
+            modelo: "",
+            medida: "",
+            image: "",
         });
-    };
+    }, []);
+    const [data, setData] = useState({});
 
     const notify = (result) =>
         toast.success(result, {
@@ -46,7 +37,7 @@ export default function Article() {
         handleButton();
 
         const Options = {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Content-type": "application/json",
             },
@@ -54,7 +45,7 @@ export default function Article() {
         };
 
         try {
-            const apiUrl = `${API_URL}/update/${id}`;
+            const apiUrl = `${API_URL}/new`;
             const result = await fetch(apiUrl, Options).then((d) => d.json());
 
             notify(result);
@@ -63,6 +54,12 @@ export default function Article() {
         }
     };
 
+    const handleChange = (event) => {
+        setData({
+            ...data,
+            [event.target.name]: event.target.value,
+        });
+    };
     return (
         <div className="container">
             <ToastContainer />
@@ -74,16 +71,6 @@ export default function Article() {
                     <div className="card-body">
                         <form onSubmit={handleSubmit} method="POST">
                             <div>
-                                <div className="mb-5">
-                                    <label className="form-label">Codigo</label>
-                                    <input
-                                        type="text"
-                                        name="cod_Articulo"
-                                        className="form-control"
-                                        defaultValue={data.cod_Articulo}
-                                        onChange={handleChange}
-                                    />
-                                </div>
                                 <div className="mb-5">
                                     <label className="form-label">Marca</label>
                                     <input
@@ -112,31 +99,6 @@ export default function Article() {
                                         className="form-control"
                                         defaultValue={data.medida}
                                         onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="mb-5">
-                                    <label className="form-label">
-                                        Proveedor
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="cod_Proveedor"
-                                        className="form-control"
-                                        defaultValue={data.cod_Proveedor}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="mb-5">
-                                    <label className="form-label">
-                                        Cantidad
-                                    </label>
-                                    <input
-                                        type="number"
-                                        name="cantidad"
-                                        className="form-control"
-                                        defaultValue={data.cantidad}
-                                        onChange={handleChange}
-                                        min="0"
                                     />
                                 </div>
                                 <hr />

@@ -38,7 +38,7 @@ export default function Home() {
                                         scope="col"
                                     >
                                         <Link
-                                            to={`/newArticle`}
+                                            to={`/new`}
                                             className="btn btn-success btn-sm w-100 text-center"
                                         >
                                             New
