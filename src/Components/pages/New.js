@@ -66,7 +66,6 @@ export default function NewArticle() {
             await fetch(apiUrl, Options)
                 .then((r) => r.json())
                 .then((d) => {
-                    console.log(d.message);
                     notify(d.message);
                 });
         } catch (error) {
