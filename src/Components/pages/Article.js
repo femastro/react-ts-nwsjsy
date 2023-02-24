@@ -79,73 +79,75 @@ export default function Article() {
         <div className="container">
             <ToastContainer />
             <div className="row">
-                <div className="card col-md-8 mx-auto">
-                    <div className="card-header text-center mt-3">
+                <div className="card col-md-5 mx-auto">
+                    <div className="card-header text-center mt-2">
                         <h1>Edit Article</h1>
                     </div>
                     <div className="card-body">
                         <form onSubmit={handleSubmit} method="POST">
                             <div>
-                                <div className="mb-5">
-                                    <label className="form-label">Codigo</label>
+                                <div className="mb-2">
+                                    <label className="form-label">
+                                        Codigo Articulo
+                                    </label>
                                     <input
                                         type="text"
                                         name="cod_Articulo"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         defaultValue={data.cod_Articulo}
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="mb-5">
+                                <div className="mb-2">
                                     <label className="form-label">Marca</label>
                                     <input
                                         type="text"
                                         name="marca"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         defaultValue={data.marca}
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="mb-5">
+                                <div className="mb-2">
                                     <label className="form-label">Modelo</label>
                                     <input
                                         type="text"
                                         name="modelo"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         defaultValue={data.modelo}
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="mb-5">
+                                <div className="mb-2">
                                     <label className="form-label">Medida</label>
                                     <input
                                         type="text"
                                         name="medida"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         defaultValue={data.medida}
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="mb-5">
+                                <div className="mb-2">
                                     <label className="form-label">
-                                        Proveedor
+                                        Codigo Proveedor
                                     </label>
                                     <input
                                         type="text"
                                         name="cod_Proveedor"
-                                        className="form-control"
+                                        className="form-control form-control-sm"
                                         defaultValue={data.cod_Proveedor}
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="mb-5">
+                                <div className="mb-2">
                                     <label className="form-label">
                                         Cantidad
                                     </label>
                                     <input
                                         type="number"
                                         name="cantidad"
-                                        className="form-control"
+                                        className="form-control form-control-sm w-50"
                                         defaultValue={data.cantidad}
                                         onChange={handleChange}
                                         min="0"
@@ -162,8 +164,8 @@ export default function Article() {
                             </div>
                         </form>
                     </div>
-                    <div className="row m-5 text-center">
-                        <div className="col-md-4 mx-auto">
+                    <div className="row mb-3 text-center">
+                        <div className="col-md-5 mx-auto">
                             <Link
                                 className="btn btn-danger btn-sm w-100"
                                 to={`/`}

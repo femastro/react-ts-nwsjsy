@@ -162,14 +162,14 @@ export default function NewArticle() {
             <ToastContainer />
             <div className="row">
                 <div id="error"></div>
-                <div className="card col-md-8 mx-auto">
+                <div className="card col-md-5 mx-auto">
                     <div className="card-header text-center mt-3">
-                        <h1>Edit Article</h1>
+                        <h1>New Article</h1>
                     </div>
                     <div className="card-body">
                         <form onSubmit={handleSubmit} method="POST">
                             <div>
-                                <div className="mb-5">
+                                <div className="mb-3">
                                     <label className="form-label">Marcas</label>
                                     <select
                                         className="form-select form-select-sm"
@@ -189,7 +189,7 @@ export default function NewArticle() {
                                         ))}
                                     </select>
                                 </div>
-                                <div className="mb-5">
+                                <div className="mb-3">
                                     <label className="form-label">
                                         Modelos
                                     </label>
@@ -211,7 +211,7 @@ export default function NewArticle() {
                                         ))}
                                     </select>
                                 </div>
-                                <div className="mb-5">
+                                <div className="mb-3">
                                     <label className="form-label">
                                         Medidas
                                     </label>
@@ -244,8 +244,8 @@ export default function NewArticle() {
                             </div>
                         </form>
                     </div>
-                    <div className="row m-5 text-center">
-                        <div className="col-md-4 mx-auto">
+                    <div className="row mb-3 text-center">
+                        <div className="col-md-5 mx-auto">
                             <Link
                                 className="btn btn-danger btn-sm w-100"
                                 to={`/`}
