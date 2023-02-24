@@ -35,11 +35,26 @@ export default function DeleteById() {
         }
     }
 
-    handleSubmit();
+    const question = () => {
+        const msg = "Esta seguro de Eliminar este Registro ?";
+
+        if (confirm(msg)) {
+            handleSubmit();
+        } else {
+            window.location = "/";
+        }
+    };
+
+    question();
 
     return (
         <div className="container">
             <ToastContainer />
+            {/* <div className="row">
+                <div className="col-md-6 mx-auto">
+                    <h5>Esta eliminando un Registro !</h5>
+                </div>
+            </div> */}
         </div>
     );
 }

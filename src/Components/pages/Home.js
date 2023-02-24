@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -33,6 +33,16 @@ export default function Home() {
     useEffect(() => {
         carga();
     }, []);
+
+    // function handleConfirm(id) {
+    //     const msg = "Esta seguro de Eliminar este Registro ?";
+
+    //     if (confirm(msg)) {
+    //         Navigate({ to: `delete/${id}` });
+    //     } else {
+    //         window.location = "/";
+    //     }
+    // }
 
     return (
         <div className="container">
@@ -86,6 +96,7 @@ export default function Home() {
                                         </td>
                                         <td className="text-center">
                                             <Link
+                                                // onClick={handleConfirm(item.id)}
                                                 to={`delete/${item.id}`}
                                                 className="btn btn-danger btn-sm"
                                             >
