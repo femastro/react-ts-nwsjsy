@@ -13,16 +13,16 @@ export default function NewArticle() {
     const [dataModelo, setModelo] = useState([]);
     const [dataMedida, setMedida] = useState([]);
 
-    useEffect(() => {
-        async function fetchData() {
-            await fetch(API_URL + "/all/marcas")
-                .then((r) => r.json())
-                .then((d) => {
-                    setMarca(d);
-                })
-                .catch((error) => console.error("Error => ", error));
-        }
+    const fetchData = async () => {
+        await fetch(API_URL + "/all/marcas")
+            .then((r) => r.json())
+            .then((d) => {
+                setMarca(d);
+            })
+            .catch((error) => console.error("Error => ", error));
+    };
 
+    useEffect(() => {
         fetchData();
 
         setData({
