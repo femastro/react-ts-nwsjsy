@@ -3,22 +3,40 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Home() {
+    const notify = (message) => {
+        toast.error(message, {
+            position: "top-center",
+            autoClose: 3000,
+        });
+    };
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-        fetch(`https://www.mastrosoft.com.ar/api/public/neumaticos`)
+    const carga = async () => {
+        await fetch(`https://www.mastrosoft.com.ar/api/public/neumaticos`)
             .then((response) => response.json())
-            .then((data) => {
-                const sortData = [...data].sort((a, b) => a.id - b.id);
-                setData(sortData);
+            .then((d) => {
+                if (d.error == "true") {
+                    notify(d.message);
+                } else {
+                    const sortData = [...d].sort((a, b) => a.id - b.id);
+                    setData(sortData);
+                }
             })
 
-            .catch((error) => console.error("Error =>", error));
+            .catch((error) => console.error("Error => ", error));
+    };
+
+    useEffect(() => {
+        carga();
     }, []);
 
     return (
         <div className="container">
+            <ToastContainer />
             <div className="row">
                 <div className="col-md-12">
                     <div className="table-responsive">

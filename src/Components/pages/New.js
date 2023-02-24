@@ -36,7 +36,6 @@ export default function NewArticle() {
     }, []);
 
     const notify = (message, alerta) => {
-        console.log(alerta);
         if (alerta == "true") {
             toast.success(message, {
                 position: "top-center",
@@ -78,7 +77,6 @@ export default function NewArticle() {
             await fetch(apiUrl, Options)
                 .then((r) => r.json())
                 .then((d) => {
-                    console.log(d);
                     notify(d.message, d.alerta);
                 });
         } catch (error) {
