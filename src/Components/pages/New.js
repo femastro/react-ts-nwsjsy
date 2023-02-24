@@ -35,13 +35,25 @@ export default function NewArticle() {
         });
     }, []);
 
-    const notify = (message) => {
-        toast.success(message, {
-            autoClose: 3000,
-            success: setTimeout(() => {
-                window.location = "/";
-            }, 3200),
-        });
+    const notify = (message, alerta) => {
+        console.log(alerta);
+        if (alerta == "true") {
+            toast.success(message, {
+                position: "top-center",
+                autoClose: 3000,
+                success: setTimeout(() => {
+                    window.location = "/";
+                }, 3200),
+            });
+        } else {
+            toast.error(message, {
+                position: "top-center",
+                autoClose: 3000,
+                success: setTimeout(() => {
+                    window.location = "/";
+                }, 3200),
+            });
+        }
     };
     const handleButton = () => {
         let btn = document.getElementById("button");
@@ -66,7 +78,8 @@ export default function NewArticle() {
             await fetch(apiUrl, Options)
                 .then((r) => r.json())
                 .then((d) => {
-                    notify(d.message);
+                    console.log(d);
+                    notify(d.message, d.alerta);
                 });
         } catch (error) {
             console.log(error);

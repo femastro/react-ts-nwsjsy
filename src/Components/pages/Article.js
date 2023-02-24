@@ -27,13 +27,25 @@ export default function Article() {
         });
     };
 
-    const notify = (result) =>
-        toast.success(result, {
-            autoClose: 3000,
-            success: setTimeout(() => {
-                window.location = "/";
-            }, 3200),
-        });
+    const notify = (message, alerta) => {
+        if (alerta == "true") {
+            toast.success(message, {
+                position: "top-center",
+                autoClose: 3000,
+                success: setTimeout(() => {
+                    window.location = "/";
+                }, 3200),
+            });
+        } else {
+            toast.error(message, {
+                position: "top-center",
+                autoClose: 3000,
+                success: setTimeout(() => {
+                    window.location = "/";
+                }, 3200),
+            });
+        }
+    };
 
     const handleButton = () => {
         let btn = document.getElementById("button");
@@ -57,7 +69,7 @@ export default function Article() {
             const apiUrl = `${API_URL}/update/${id}`;
             const result = await fetch(apiUrl, Options).then((d) => d.json());
 
-            notify(result);
+            notify(result.message, result.alerta);
         } catch (error) {
             console.log(error);
         }
