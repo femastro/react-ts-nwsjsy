@@ -20,23 +20,22 @@ export default function DeleteById() {
         });
     };
 
-    const handleSubmit = async () => {
-        fetch(apiUrl, Options)
-            .then((r) => r.json())
-            .then((result) => {
-                notify(result.message);
-            });
-    };
-
-    const Options = {
-        method: "DELETE",
-    };
-
-    try {
-        handleSubmit();
-    } catch (error) {
-        console.log(error);
+    async function handleSubmit() {
+        const Options = {
+            method: "DELETE",
+        };
+        try {
+            await fetch(apiUrl, Options)
+                .then((r) => r.json())
+                .then((result) => {
+                    notify(result.message);
+                });
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    handleSubmit();
 
     return (
         <div className="container">
