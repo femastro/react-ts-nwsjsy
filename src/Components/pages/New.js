@@ -86,8 +86,15 @@ export default function NewArticle() {
         }
     };
 
+    ///
+    ///     Carga de los Select
+
+    ///
+    /// EJ. de La BD : idneumaticos, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad, image.
+    ///
+
     const handleMarca = async (event) => {
-        /// capturo el dato del select Marcas
+        /// capturo el dato del select Marcas para buscar el Modelo para el siguiente Select
         const dato = {
             marca: event.target.value,
         };
@@ -106,7 +113,7 @@ export default function NewArticle() {
             })
             .catch((error) => console.error("Error =>", error));
 
-        /// Guardo el dato del select en data para usarlo en el handleSubmit
+        /// Guardo el dato del select Marca en data para usarlo en el handleSubmit
         setData({
             ...data,
             [event.target.name]: event.target.value,
@@ -114,6 +121,7 @@ export default function NewArticle() {
     };
 
     const handleModelo = async (event) => {
+        /// capturo el valor del Select Modelo y sumo el del Select Marca
         const dato = {
             marca: data.marca,
             modelo: event.target.value,
@@ -132,6 +140,8 @@ export default function NewArticle() {
                 setMedida(d);
             })
             .catch((error) => console.error("Error =>", error));
+
+        /// guardo el Select Modelo en data.
         setData({
             ...data,
             [event.target.name]: event.target.value,
@@ -144,6 +154,10 @@ export default function NewArticle() {
             [event.target.name]: event.target.value,
         });
     };
+
+    ///
+    /// Fin Carga de los Select.
+    ///
 
     return (
         <div className="container">
