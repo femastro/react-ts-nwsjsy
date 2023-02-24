@@ -1,3 +1,5 @@
 # react-ts-nwsjsy
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-ts-nwsjsy)
+Ejecutar npm i 
+
+y luego npm start
