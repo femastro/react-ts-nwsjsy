@@ -5,27 +5,44 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_URL = "https://www.mastrosoft.com.ar/api/public/neumaticos";
+const API_URL = "https://www.mastrosoft.com.ar/api/public";
 
 export default function NewArticle() {
+    const [data, setData] = useState([]);
+    const [dataMarca, setMarca] = useState([]);
+    const [dataModelo, setModelo] = useState([]);
+    const [dataMedida, setMedida] = useState([]);
+
     useEffect(() => {
+        async function fetchData() {
+            await fetch(API_URL + "/all/marcas")
+                .then((r) => r.json())
+                .then((d) => {
+                    setMarca(d);
+                })
+                .catch((error) => console.error("Error => ", error));
+        }
+
+        fetchData();
+
         setData({
             marca: "",
             modelo: "",
             medida: "",
+            cod_Proveedor: "",
+            cantidad: 0,
             image: "",
         });
     }, []);
-    const [data, setData] = useState({});
 
-    const notify = (result) =>
-        toast.success(result, {
+    const notify = (message) => {
+        toast.success(message, {
             autoClose: 3000,
             success: setTimeout(() => {
                 window.location = "/";
             }, 3200),
         });
-
+    };
     const handleButton = () => {
         let btn = document.getElementById("button");
         btn.textContent = "Saving !";
@@ -45,25 +62,82 @@ export default function NewArticle() {
         };
 
         try {
-            const apiUrl = `${API_URL}/new`;
-            const result = await fetch(apiUrl, Options).then((d) => d.json());
-
-            notify(result);
+            const apiUrl = `${API_URL}/neumaticos/new`;
+            await fetch(apiUrl, Options)
+                .then((r) => r.json())
+                .then((d) => {
+                    console.log(d.message);
+                    notify(d.message);
+                });
         } catch (error) {
             console.log(error);
         }
     };
 
-    const handleChange = (event) => {
+    const handleMarca = async (event) => {
+        /// capturo el dato del select Marcas
+        const dato = {
+            marca: event.target.value,
+        };
+
+        const config = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(dato),
+        };
+        await fetch(API_URL + "/all/modelos", config)
+            .then((r) => r.json())
+            .then((d) => {
+                setModelo(d);
+            })
+            .catch((error) => console.error("Error =>", error));
+
+        /// Guardo el dato del select en data para usarlo en el handleSubmit
         setData({
             ...data,
             [event.target.name]: event.target.value,
         });
     };
+
+    const handleModelo = async (event) => {
+        const dato = {
+            marca: data.marca,
+            modelo: event.target.value,
+        };
+
+        const config = {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(dato),
+        };
+        await fetch(API_URL + "/all/medidas", config)
+            .then((r) => r.json())
+            .then((d) => {
+                setMedida(d);
+            })
+            .catch((error) => console.error("Error =>", error));
+        setData({
+            ...data,
+            [event.target.name]: event.target.value,
+        });
+    };
+
+    const handleMedida = (event) => {
+        setData({
+            ...data,
+            [event.target.name]: event.target.value,
+        });
+    };
+
     return (
         <div className="container">
             <ToastContainer />
             <div className="row">
+                <div id="error"></div>
                 <div className="card col-md-8 mx-auto">
                     <div className="card-header text-center mt-3">
                         <h1>Edit Article</h1>
@@ -72,34 +146,68 @@ export default function NewArticle() {
                         <form onSubmit={handleSubmit} method="POST">
                             <div>
                                 <div className="mb-5">
-                                    <label className="form-label">Marca</label>
-                                    <input
-                                        type="text"
+                                    <label className="form-label">Marcas</label>
+                                    <select
+                                        className="form-select form-select-sm"
+                                        onChange={handleMarca}
                                         name="marca"
-                                        className="form-control"
-                                        defaultValue={data.marca}
-                                        onChange={handleChange}
-                                    />
+                                    >
+                                        <option defaultValue="0">
+                                            Select One
+                                        </option>
+                                        {dataMarca.map((item) => (
+                                            <option
+                                                key={item.idneumaticos}
+                                                defaultValue={item.marca}
+                                            >
+                                                {item.marca}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="mb-5">
-                                    <label className="form-label">Modelo</label>
-                                    <input
-                                        type="text"
+                                    <label className="form-label">
+                                        Modelos
+                                    </label>
+                                    <select
+                                        className="form-select form-select-sm"
+                                        onChange={handleModelo}
                                         name="modelo"
-                                        className="form-control"
-                                        defaultValue={data.modelo}
-                                        onChange={handleChange}
-                                    />
+                                    >
+                                        <option defaultValue="0">
+                                            Select One
+                                        </option>
+                                        {dataModelo.map((item) => (
+                                            <option
+                                                key={item.idneumaticos}
+                                                defaultValue={item.modelo}
+                                            >
+                                                {item.modelo}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="mb-5">
-                                    <label className="form-label">Medida</label>
-                                    <input
-                                        type="text"
+                                    <label className="form-label">
+                                        Medidas
+                                    </label>
+                                    <select
+                                        className="form-select form-select-sm"
+                                        onChange={handleMedida}
                                         name="medida"
-                                        className="form-control"
-                                        defaultValue={data.medida}
-                                        onChange={handleChange}
-                                    />
+                                    >
+                                        <option defaultValue="0">
+                                            Select One
+                                        </option>
+                                        {dataMedida.map((item) => (
+                                            <option
+                                                key={item.idneumaticos}
+                                                defaultValue={item.medida}
+                                            >
+                                                {item.medida}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <hr />
                                 <button
