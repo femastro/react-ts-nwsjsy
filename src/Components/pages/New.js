@@ -19,7 +19,7 @@ export default function NewArticle() {
             .then((d) => {
                 setMarca(d);
             })
-            .catch((error) => console.error("Error => ", error));
+            .catch((error) => console.log("Error => ", error));
     };
 
     useEffect(() => {
@@ -109,7 +109,7 @@ export default function NewArticle() {
             .then((d) => {
                 setModelo(d);
             })
-            .catch((error) => console.error("Error =>", error));
+            .catch((error) => console.log("Error =>", error));
 
         /// Guardo el dato del select Marca en data para usarlo en el handleSubmit
         setData({
@@ -137,7 +137,7 @@ export default function NewArticle() {
             .then((d) => {
                 setMedida(d);
             })
-            .catch((error) => console.error("Error =>", error));
+            .catch((error) => console.log("Error =>", error));
 
         /// guardo el Select Modelo en data.
         setData({

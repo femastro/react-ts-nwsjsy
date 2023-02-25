@@ -27,22 +27,12 @@ export default function Home() {
                 }
             })
 
-            .catch((error) => console.error("Error => ", error));
+            .catch((error) => console.log("Error => ", error));
     };
 
     useEffect(() => {
         carga();
     }, []);
-
-    // function handleConfirm(id) {
-    //     const msg = "Esta seguro de Eliminar este Registro ?";
-
-    //     if (confirm(msg)) {
-    //         Navigate({ to: `delete/${id}` });
-    //     } else {
-    //         window.location = "/";
-    //     }
-    // }
 
     return (
         <div className="container">
@@ -96,7 +86,6 @@ export default function Home() {
                                         </td>
                                         <td className="text-center">
                                             <Link
-                                                // onClick={handleConfirm(item.id)}
                                                 to={`delete/${item.id}`}
                                                 className="btn btn-danger btn-sm"
                                             >

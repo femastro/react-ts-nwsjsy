@@ -20,7 +20,7 @@ export default function DeleteById() {
         });
     };
 
-    async function handleSubmit() {
+    const handleSubmit = async () => {
         const Options = {
             method: "DELETE",
         };
@@ -33,7 +33,7 @@ export default function DeleteById() {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const question = () => {
         const msg = "Esta seguro de Eliminar este Registro ?";
