@@ -50,11 +50,6 @@ export default function DeleteById() {
     return (
         <div className="container">
             <ToastContainer />
-            {/* <div className="row">
-                <div className="col-md-6 mx-auto">
-                    <h5>Esta eliminando un Registro !</h5>
-                </div>
-            </div> */}
         </div>
     );
 }
