@@ -91,62 +91,49 @@ export default function NewArticle() {
     /// EJ. de La BD : idneumaticos, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad, image.
     ///
 
-    const handleMarca = async (event) => {
-        /// capturo el dato del select Marcas para buscar el Modelo para el siguiente Select
-        const dato = {
-            marca: event.target.value,
-        };
+    const handleChange = async (event) => {
+        let url;
+        let dato;
+        switch (event.target.name) {
+            case "marca":
+                url = "modelos";
+                dato = {
+                    marca: event.target.value,
+                };
+                break;
+            case "modelo":
+                dato = {
+                    marca: data.marca,
+                    modelo: event.target.value,
+                };
+                url = "medidas";
+                break;
+            case "medidas":
+                url = null;
+                break;
+        }
+        if (url != null) {
+            const config = {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify(dato),
+            };
+            await fetch(API_URL + "/all/" + url, config)
+                .then((r) => r.json())
+                .then((d) => {
+                    if (url == "modelos") {
+                        setModelo(d);
+                    }
+                    if (url == "medidas") {
+                        setMedida(d);
+                    }
+                })
+                .catch((error) => console.log("Error =>", error));
+        }
 
-        const config = {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(dato),
-        };
-        await fetch(API_URL + "/all/modelos", config)
-            .then((r) => r.json())
-            .then((d) => {
-                setModelo(d);
-            })
-            .catch((error) => console.log("Error =>", error));
-
-        /// Guardo el dato del select Marca en data para usarlo en el handleSubmit
-        setData({
-            ...data,
-            [event.target.name]: event.target.value,
-        });
-    };
-
-    const handleModelo = async (event) => {
-        /// capturo el valor del Select Modelo y sumo el del Select Marca
-        const dato = {
-            marca: data.marca,
-            modelo: event.target.value,
-        };
-
-        const config = {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(dato),
-        };
-        await fetch(API_URL + "/all/medidas", config)
-            .then((r) => r.json())
-            .then((d) => {
-                setMedida(d);
-            })
-            .catch((error) => console.log("Error =>", error));
-
-        /// guardo el Select Modelo en data.
-        setData({
-            ...data,
-            [event.target.name]: event.target.value,
-        });
-    };
-
-    const handleMedida = (event) => {
+        /// Guardo el <Select> en data. Para cuando ejecuto el Submit !
         setData({
             ...data,
             [event.target.name]: event.target.value,
@@ -173,7 +160,7 @@ export default function NewArticle() {
                                     <label className="form-label">Marcas</label>
                                     <select
                                         className="form-select form-select-sm"
-                                        onChange={handleMarca}
+                                        onChange={handleChange}
                                         name="marca"
                                     >
                                         <option defaultValue="0">
@@ -195,7 +182,7 @@ export default function NewArticle() {
                                     </label>
                                     <select
                                         className="form-select form-select-sm"
-                                        onChange={handleModelo}
+                                        onChange={handleChange}
                                         name="modelo"
                                     >
                                         <option defaultValue="0">
@@ -217,7 +204,7 @@ export default function NewArticle() {
                                     </label>
                                     <select
                                         className="form-select form-select-sm"
-                                        onChange={handleMedida}
+                                        onChange={handleChange}
                                         name="medida"
                                     >
                                         <option defaultValue="0">
