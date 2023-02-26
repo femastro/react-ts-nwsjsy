@@ -12,7 +12,6 @@ import DeleteById from "./Components/pages/Delete";
 import NewArticle from "./Components/pages/New";
 
 export default function App() {
-    const notify = () => toast("Wow so easy!");
     return (
         <div>
             <Header />
