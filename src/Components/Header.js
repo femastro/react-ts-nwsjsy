@@ -2,7 +2,7 @@ import * as React from "react";
 
 export default function Header() {
     return (
-        <div>
+        <div className="mb-3">
             <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
                 <div className="container-fluid">
                     <a className="navbar-brand" href="/">
@@ -41,14 +41,14 @@ export default function Header() {
                     </div>
                 </div>
             </nav>
-            <div className="container">
+            {/* <div className="container">
                 <div className="row pt-5 text-danger text-center">
                     <div className="col-md-6 mx-auto">
                         <h3>Gestión de Stock</h3>
                     </div>
                 </div>
                 <hr />
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -13,26 +13,33 @@ export default function Article() {
     const apiUrl = `${API_URL}/${id}`;
 
     useEffect(() => {
-        const apiUrl = `${API_URL}/${id}`;
-        fetch(apiUrl)
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data);
-            });
-        // QrCode(apiUrl);
+        handleLoad();
+        QrCode(apiUrl);
     }, []);
 
-    // function QrCode() {
-    //     const qr = new QRCode(document.getElementById("codigoqr"), {
-    //         text: apiUrl,
-    //         width: 128,
-    //         height: 128,
-    //         colorDark: "#000000",
-    //         colorLight: "#ffffff",
-    //     });
-    //     qr.clear();
-    //     qr.makeCode(apiUrl);
-    // }
+    const handleLoad = async () => {
+        try {
+            await fetch(apiUrl)
+                .then((response) => response.json())
+                .then((data) => {
+                    setData(data);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    function QrCode() {
+        const qr = new QRCode(document.getElementById("codigoqr"), {
+            text: apiUrl,
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+        });
+        qr.clear();
+        qr.makeCode(apiUrl);
+    }
 
     const handleChange = (event) => {
         setData({
@@ -90,7 +97,7 @@ export default function Article() {
     };
 
     return (
-        <div className="container">
+        <div className="container" onLoad={handleLoad}>
             <ToastContainer />
             <div className="row">
                 <div className="card col-md-5 mx-auto">
@@ -183,11 +190,15 @@ export default function Article() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="mb-2">
-                                    <label className="form-label">
-                                        Codigo QR
-                                    </label>
-                                    <div id="codigoqr"></div>
+                                <div className="row m-3 p-2 border border-light">
+                                    <div className="col-md-6">
+                                        <label className="form-label form-label-sm">
+                                            Codigo QR
+                                        </label>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div id="codigoqr"></div>
+                                    </div>
                                 </div>
                                 <hr />
                                 <button
