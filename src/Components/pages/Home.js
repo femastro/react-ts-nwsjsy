@@ -1,10 +1,10 @@
-import * as React from "react";
-
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+const API_URL = "https://www.mastrosoft.com.ar/api/public/neumaticos";
 
 export default function Home() {
     const notify = (message) => {
@@ -16,7 +16,7 @@ export default function Home() {
     const [data, setData] = useState([]);
 
     const carga = async () => {
-        await fetch(`https://www.mastrosoft.com.ar/api/public/neumaticos`)
+        await fetch(API_URL)
             .then((response) => response.json())
             .then((d) => {
                 if (d.error == "true") {
@@ -33,6 +33,29 @@ export default function Home() {
     useEffect(() => {
         carga();
     }, []);
+
+    // async function handleDelete(event) {
+    //     console.log(event.target.value);
+
+    //     const apiUrl = `${API_URL}/delete/${event.target.value}`;
+
+    //     const msg = "Esta seguro que desea Eleimnar el Registro ?";
+
+    //     if (confirm(msg)) {
+    //         const Options = {
+    //             method: "DELETE",
+    //         };
+    //         try {
+    //             await fetch(apiUrl, Options)
+    //                 .then((r) => r.json())
+    //                 .then((result) => {
+    //                     notify(result.message);
+    //                 });
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    // }
 
     return (
         <div className="container">

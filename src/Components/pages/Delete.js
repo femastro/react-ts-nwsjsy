@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 
 import { toast, ToastContainer } from "react-toastify";
@@ -35,21 +34,20 @@ export default function DeleteById() {
         }
     };
 
-    const question = () => {
-        const msg = "Esta seguro de Eliminar este Registro ?";
+    function Question() {
+        const msg = "Esta Seguro que Elimina este Registro ?";
 
         if (confirm(msg)) {
             handleSubmit();
         } else {
             window.location = "/";
         }
-    };
-
-    question();
+    }
 
     return (
         <div className="container">
             <ToastContainer />
+            <Question />
         </div>
     );
 }
