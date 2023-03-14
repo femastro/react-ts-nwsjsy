@@ -61,6 +61,7 @@ export default function NewArticle() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         handleButton();
 
         const Options = {
@@ -137,6 +138,8 @@ export default function NewArticle() {
             ...data,
             [event.target.name]: event.target.value,
         });
+
+        console.log(data);
     };
 
     ///
